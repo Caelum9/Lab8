@@ -44,6 +44,9 @@ public class EmployeeDatabase {
         return manager;
     }
 
+
+    private static int n = 0;
+
     /**
      * Count the number of managers above this employee.
      * <p>
@@ -56,7 +59,16 @@ public class EmployeeDatabase {
         /*
          * Implement this function
          */
+        if (employee.getManager() == "") {
+            n = 0;
+            return 0;
+        }
+        countManagersAbove(findManager(employee));
+        n++;
+        return n;
     }
+
+    public static int m = 0;
 
     /**
      * Count the number of employees under this manager.
@@ -70,6 +82,28 @@ public class EmployeeDatabase {
         /*
          * Implement this function
          */
+        if (findUnder(employee) == 0) {
+            m = 0;
+            return 0;
+        }
+
+        for (int i = 0; i < employees.size(); i++) {
+            if (findManager(employees.get(i)) == employee) {
+                m += countEmployeesUnder(employees.get(i));
+            }
+        }
+        return m;
+
+    }
+
+    int findUnder(final Employee employee) {
+        int m = 0;
+        for (int i = 0; i < employees.size(); i++) {
+            if (findManager(employees.get(i)) == employee) {
+                m++;
+            }
+        }
+        return m;
     }
 
     /**
